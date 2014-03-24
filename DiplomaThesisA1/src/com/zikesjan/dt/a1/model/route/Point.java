@@ -1,4 +1,4 @@
-package com.zikesjan.a1.model.route;
+package com.zikesjan.dt.a1.model.route;
 
 public class Point {
 

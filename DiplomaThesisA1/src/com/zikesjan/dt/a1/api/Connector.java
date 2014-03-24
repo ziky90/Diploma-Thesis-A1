@@ -23,8 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.zikesjan.a1.model.request.Request;
-import com.zikesjan.a1.model.route.Route;
+import com.zikesjan.dt.a1.model.request.Request;
+import com.zikesjan.dt.a1.model.route.Route;
 
 
 public class Connector {

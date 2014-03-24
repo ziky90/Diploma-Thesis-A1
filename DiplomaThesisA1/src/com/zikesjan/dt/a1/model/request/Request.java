@@ -1,8 +1,8 @@
-package com.zikesjan.a1.model.request;
+package com.zikesjan.dt.a1.model.request;
 
 import java.util.List;
 
-import com.zikesjan.a1.model.route.Point;
+import com.zikesjan.dt.a1.model.route.Point;
 
 public class Request {
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.http.entity.StringEntity;
 
-import com.zikesjan.a1.model.request.Request;
+import com.zikesjan.dt.a1.model.request.Request;
 
 public class Util {
 

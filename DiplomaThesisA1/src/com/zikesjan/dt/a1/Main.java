@@ -1,4 +1,4 @@
-package com.zikesjan.a1;
+package com.zikesjan.dt.a1;
 
 public class Main {
 

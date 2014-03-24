@@ -1,8 +1,8 @@
-package com.zikesjan.a1.generator;
+package com.zikesjan.dt.a1.generator;
 
 import java.util.Random;
 
-import com.zikesjan.a1.model.route.Point;
+import com.zikesjan.dt.a1.model.route.Point;
 
 public class Generator {
 
