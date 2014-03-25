@@ -36,6 +36,7 @@ public class Util {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		System.out.println(json.toString());
 		return json;
 	}
 

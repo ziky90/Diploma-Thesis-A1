@@ -28,11 +28,16 @@ public class PointGenerator {
 	/**
 	 * method for generating the random point within the circle
 	 * @param center
-	 * @param radius
+	 * @param radius in degrees of lat lon
 	 * @return
 	 */
 	public static Point generatePointInCircle(Point center, int radius){
-		//TODO implement
-		return null;
+		//TODO check it this thing works correctly
+		Random r = new Random();
+		float angle = 2*(float)Math.PI*r.nextFloat();
+		float distance = radius * (r.nextFloat());
+		float x = (float)Math.cos(angle) * distance;
+		float y = (float)Math.sin(angle) * distance;
+		return new Point(center.getLat()+(int)(y*1E6), center.getLon()+(int)(x*1E6));
 	}
 }

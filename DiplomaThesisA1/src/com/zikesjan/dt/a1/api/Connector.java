@@ -68,20 +68,12 @@ public class Connector {
 				//TODO build the data from the received string
 				// closing the input stream will trigger connection release
 				instream.close();
-
-				Iterator<?> keys = json.keys();
+				JSONArray plans = json.getJSONArray("journeyPlans");
 				List<Route> l = new LinkedList<Route>();
-				while (keys.hasNext()) {
-					String key = (String) keys.next();
-					try {
-						if (json.get(key) instanceof JSONArray) {
-							//loading the data from JSONArray to objects
-							JSONArray current = (JSONArray) json.get(key);
-							//TODO get all the possible routes
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+				for(int i = 0; i<plans.length(); i++){
+					JSONObject obj = plans.getJSONObject(i);
+					JSONObject prop = obj.getJSONObject("properties");
+					l.add(new Route(obj.getString("description"), prop.getInt("emissions"), prop.getInt("physicalEffort"), null, null, prop.getInt("duration"), prop.getInt("distance"), null)); //FIXME implement also legs
 				}
 				return l;
 			} else if (statusLine.getStatusCode() == HttpStatus.SC_BAD_REQUEST) {

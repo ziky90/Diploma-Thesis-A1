@@ -12,13 +12,13 @@ public class Point {
 		this.lon = lon;
 	}
 	
-	public long getLat() {
+	public int getLat() {
 		return lat;
 	}
 	public void setLat(int lat) {
 		this.lat = lat;
 	}
-	public long getLon() {
+	public int getLon() {
 		return lon;
 	}
 	public void setLon(int lon) {
