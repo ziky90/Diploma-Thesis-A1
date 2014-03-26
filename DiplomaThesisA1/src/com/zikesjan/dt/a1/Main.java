@@ -12,7 +12,7 @@ import com.zikesjan.dt.a1.model.route.Route;
 
 public class Main {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		//TODO generate the points
 		//TODO find all the routes
 		//TODO do some analysis
