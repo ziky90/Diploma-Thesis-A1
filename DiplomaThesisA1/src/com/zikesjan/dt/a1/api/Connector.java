@@ -55,7 +55,7 @@ public class Connector {
 				// a simple JSON response read
 				InputStream instream = entity.getContent();
 				String result = convertStreamToString(instream);
-
+				
 				// a simple JSONObject creation
 				JSONObject json = null;
 				try {
@@ -67,6 +67,7 @@ public class Connector {
 				//TODO build the data from the received string
 				// closing the input stream will trigger connection release
 				instream.close();
+				
 				JSONArray plans = json.getJSONArray("journeyPlans");
 				List<Route> l = new LinkedList<Route>();
 				for(int i = 0; i<plans.length(); i++){

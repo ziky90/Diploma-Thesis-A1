@@ -16,7 +16,13 @@ public class Main {
 		//TODO generate the points
 		//TODO find all the routes
 		//TODO do some analysis
-		List<String> l = new LinkedList<String>();
+		Point center = new Point(45466770, 9186372); //heuristically set the center of Milan
+		Request r = new Request(10, 2000, addAllMeansOfTransport(), PointGenerator.generatePointInCircle(center, 0.1f), PointGenerator.generatePointInCircle(center, 0.1f));//new Point(45481920, 9188340), new Point(45422913, 9105514));
+		List<Route> result = Connector.getInfo(new Date(), r);
+	}
+	
+	private static List<String> addAllMeansOfTransport(){
+		List<String> l = new LinkedList<>();
 		l.add("WALK");
 		l.add("TAXI");
 		l.add("CAR");
@@ -29,9 +35,7 @@ public class Main {
 		l.add("TROLLEYBUS");
 		l.add("FERRY");
 		l.add("OTHER");
-		Point center = new Point(45466770, 9186372);
-		Request r = new Request(10, 2000, l, PointGenerator.generatePointInCircle(center, 1), PointGenerator.generatePointInCircle(center, 1));
-		List<Route> result = Connector.getInfo(new Date(), r);
+		return l;
 	}
 	
 	

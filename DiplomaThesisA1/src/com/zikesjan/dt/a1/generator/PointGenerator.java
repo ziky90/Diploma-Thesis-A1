@@ -31,7 +31,7 @@ public class PointGenerator {
 	 * @param radius in degrees of lat lon
 	 * @return
 	 */
-	public static Point generatePointInCircle(Point center, int radius){
+	public static Point generatePointInCircle(Point center, float radius){
 		//TODO check it this thing works correctly
 		Random r = new Random();
 		float angle = 2*(float)Math.PI*r.nextFloat();
