@@ -22,7 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.zikesjan.dt.a1.bikeshare.BikeShare;
+import com.zikesjan.dt.a1.bikeshare.BikeShareData;
 import com.zikesjan.dt.a1.model.request.Request;
+import com.zikesjan.dt.a1.model.route.Leg;
+import com.zikesjan.dt.a1.model.route.Point;
 import com.zikesjan.dt.a1.model.route.Route;
 
 
@@ -73,7 +77,7 @@ public class Connector {
 				for(int i = 0; i<plans.length(); i++){
 					JSONObject obj = plans.getJSONObject(i);
 					JSONObject prop = obj.getJSONObject("properties");
-					l.add(new Route(obj.getString("description"), prop.getInt("emissions"), prop.getInt("physicalEffort"), null, null, prop.getInt("duration"), prop.getInt("distance"), null)); //FIXME implement also legs
+					l.add(new Route(obj.getString("description"), prop.getInt("emissions"), prop.getInt("physicalEffort"), null, null, prop.getInt("duration"), prop.getInt("distance"), buildLeg(obj.getJSONArray("journeyLegs")))); //FIXME implement also legs
 				}
 				return l;
 			} else if (statusLine.getStatusCode() == HttpStatus.SC_BAD_REQUEST) {
@@ -89,6 +93,24 @@ public class Connector {
 		}
 
 		return null;
+	}
+	
+	private static List<Leg> buildLeg(JSONArray json){
+		List<Leg> result = new LinkedList<Leg>();
+		for(int i = 0; i<json.length(); i++){
+			JSONObject obj = json.getJSONObject(i);
+			JSONObject prop = obj.getJSONObject("properties");
+			result.add(new Leg(obj.getString("modeOfTransport"), obj.getInt("journeyLegID"), prop.getInt("emissions"), prop.getInt("distance"), prop.getInt("duration"), prop.getInt("physicalEffort")));
+			if(obj.getString("modeOfTransport").equals("SHARED_BIKE")){
+				BikeShareData bsd = BikeShareData.getInstance();
+				JSONObject origin = obj.getJSONObject("nodes").getJSONObject(obj.getLong("originID")+"");
+				JSONObject destination = obj.getJSONObject("nodes").getJSONObject(obj.getLong("originID") + "");
+				bsd.addBikeShare(new BikeShare(new Point(origin.getInt("latE6"), origin.getInt("lonE6")), 10, 100)); //TODO deal with the pricing mechanism
+				bsd.addBikeShare(new BikeShare(new Point(destination.getInt("latE6"), destination.getInt("lonE6")), 10, 100));
+			}
+			System.out.println(obj.getString("modeOfTransport"));
+		}
+		return result;
 	}
 
 	/**

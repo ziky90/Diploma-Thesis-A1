@@ -12,6 +12,7 @@ public class Request {
 	private Point origin;
 	private Point destination;
 	
+	
 	public Request(int maxInterchanges, int maxWalking,
 			List<String> allowedTransport, Point origin, Point destination) {
 		super();

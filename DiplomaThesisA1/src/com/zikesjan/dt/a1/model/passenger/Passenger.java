@@ -3,6 +3,7 @@ package com.zikesjan.dt.a1.model.passenger;
 import java.util.List;
 
 import com.zikesjan.dt.a1.model.route.Point;
+import com.zikesjan.dt.a1.model.route.Route;
 
 public class Passenger {
 
@@ -13,6 +14,12 @@ public class Passenger {
 	private int maxInterchnges;
 	private double optimalPrice;
 	private double maxPrice;
+	private List<Route> routes;
+	
+	
+	public Passenger(){
+		//TODO implement, think of variable type
+	}
 	
 	public Passenger(Point origin, Point destination, int maxWalking,
 			List<String> allowedTransport, int maxInterchnges,
@@ -82,7 +89,13 @@ public class Passenger {
 	public void setMaxPrice(double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-	
-	
+
+	public List<Route> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(List<Route> routes) {
+		this.routes = routes;
+	}
 	
 }
