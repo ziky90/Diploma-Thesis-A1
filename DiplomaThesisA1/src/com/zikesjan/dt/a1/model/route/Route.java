@@ -3,6 +3,11 @@ package com.zikesjan.dt.a1.model.route;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * POJO class representing the route
+ * @author zikesjan
+ *
+ */
 public class Route {
 
 	private String description;

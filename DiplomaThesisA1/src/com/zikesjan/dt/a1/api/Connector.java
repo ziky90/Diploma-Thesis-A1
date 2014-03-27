@@ -29,13 +29,17 @@ import com.zikesjan.dt.a1.model.route.Leg;
 import com.zikesjan.dt.a1.model.route.Point;
 import com.zikesjan.dt.a1.model.route.Route;
 
-
+/**
+ * Class that is dealing with the API calls
+ * @author zikesjan
+ *
+ */
 public class Connector {
 
 	private static final String apiURL = "http://transport.felk.cvut.cz/wp5-api/journeyPlanning/planJourney";
 
 	/**
-	 * method for getting the informations about the planes up in the air
+	 * method that calls the planers API and returns the possible routes
 	 * 
 	 * @return
 	 */
@@ -56,11 +60,9 @@ public class Connector {
 				
 				HttpEntity entity = response.getEntity();
 
-				// a simple JSON response read
 				InputStream instream = entity.getContent();
 				String result = convertStreamToString(instream);
 				
-				// a simple JSONObject creation
 				JSONObject json = null;
 				try {
 					json = new JSONObject(result);
@@ -68,8 +70,6 @@ public class Connector {
 					e.printStackTrace();
 				}
 
-				//TODO build the data from the received string
-				// closing the input stream will trigger connection release
 				instream.close();
 				
 				JSONArray plans = json.getJSONArray("journeyPlans");
@@ -95,6 +95,11 @@ public class Connector {
 		return null;
 	}
 	
+	/**
+	 * building leg from the JSON of the leg format
+	 * @param json
+	 * @return
+	 */
 	private static List<Leg> buildLeg(JSONArray json){
 		List<Leg> result = new LinkedList<Leg>();
 		for(int i = 0; i<json.length(); i++){

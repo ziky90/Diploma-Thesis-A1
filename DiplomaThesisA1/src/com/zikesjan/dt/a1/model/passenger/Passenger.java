@@ -5,6 +5,11 @@ import java.util.List;
 import com.zikesjan.dt.a1.model.route.Point;
 import com.zikesjan.dt.a1.model.route.Route;
 
+/**
+ * POJO modelling the passenger
+ * @author zikesjan
+ *
+ */
 public class Passenger {
 
 	private Point origin;
@@ -15,11 +20,6 @@ public class Passenger {
 	private double optimalPrice;
 	private double maxPrice;
 	private List<Route> routes;
-	
-	
-	public Passenger(){
-		//TODO implement, think of variable type
-	}
 	
 	public Passenger(Point origin, Point destination, int maxWalking,
 			List<String> allowedTransport, int maxInterchnges,

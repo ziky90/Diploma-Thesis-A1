@@ -6,12 +6,21 @@ import java.util.List;
 import com.zikesjan.dt.a1.model.passenger.Passenger;
 import com.zikesjan.dt.a1.model.route.Point;
 
+/**
+ * class that is supposed to generate passengers uniformly
+ * @author zikesjan
+ *
+ */
 public class PassengerGenerator {
 
+	/**
+	 * method generating passengers uniformly
+	 * @param n
+	 * @param center
+	 * @param r
+	 * @return
+	 */
 	public static List<Passenger> generateRandomPassengers(int n, Point center, float r){
-		//TODO iplement this
-		//Passenger random = new Passenger(origin, destination, maxWalking, allowedTransport, maxInterchnges, optimalPrice, maxPrice);
-		//return random;
 		List<Passenger> passengers = new LinkedList<>();
 		for(int i = 0; i<n; i++){
 			passengers.add(new Passenger(PointGenerator.generatePointInCircle(center, r),PointGenerator.generatePointInCircle(center, r), 1000, addAllMeansOfTransport(), 5, 100, 1000));
@@ -19,6 +28,10 @@ public class PassengerGenerator {
 		return passengers;
 	}
 	
+	/**
+	 * just the helper to add all allowed means of transport
+	 * @return
+	 */
 	private static List<String> addAllMeansOfTransport(){
 		List<String> l = new LinkedList<>();
 		l.add("WALK");

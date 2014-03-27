@@ -3,7 +3,11 @@ package com.zikesjan.dt.a1.model.passenger;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
+/**
+ * Singleton to keep the data about the passengers
+ * @author zikesjan
+ *
+ */
 public class PassengersData {
 	private List<Passenger> passengers = new CopyOnWriteArrayList<>();
 	private static volatile PassengersData instance = null;

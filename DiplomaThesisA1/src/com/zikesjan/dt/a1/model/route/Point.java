@@ -1,5 +1,10 @@
 package com.zikesjan.dt.a1.model.route;
 
+/**
+ *POJO class modeling one geo point
+ * @author zikesjan
+ *
+ */
 public class Point {
 
 	private int lat;

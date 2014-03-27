@@ -2,6 +2,11 @@ package com.zikesjan.dt.a1.bikeshare;
 
 import java.util.HashSet;
 
+/**
+ * singleton to keep the data about bike sharing stations
+ * @author zikesjan
+ *
+ */
 public class BikeShareData {
 
 	private HashSet<BikeShare> shares = new HashSet<>();

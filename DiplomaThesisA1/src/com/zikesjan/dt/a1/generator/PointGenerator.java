@@ -13,7 +13,7 @@ public class PointGenerator {
 
 	
 	/**
-	 * method for generating the random point within the square
+	 * method for generating the random point uniformly within the square
 	 * @param west
 	 * @param east
 	 * @param north
@@ -26,13 +26,12 @@ public class PointGenerator {
 	}
 	
 	/**
-	 * method for generating the random point within the circle
+	 * method for generating the random point uniformly within the circle
 	 * @param center
 	 * @param radius in degrees of lat lon
 	 * @return
 	 */
 	public static Point generatePointInCircle(Point center, float radius){
-		//TODO check it this thing works correctly
 		Random r = new Random();
 		float angle = 2*(float)Math.PI*r.nextFloat();
 		float distance = radius * (r.nextFloat());

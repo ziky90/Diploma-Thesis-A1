@@ -2,6 +2,11 @@ package com.zikesjan.dt.a1.bikeshare;
 
 import com.zikesjan.dt.a1.model.route.Point;
 
+/**
+ * POJO to store bike sharing station objects 
+ * @author zikesjan
+ *
+ */
 public class BikeShare {
 
 	private Point position;

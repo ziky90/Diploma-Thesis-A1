@@ -1,5 +1,10 @@
 package com.zikesjan.dt.a1.model.route;
 
+/**
+ * POJO class modeling one leg of the journey
+ * @author zikesjan
+ *
+ */
 public class Leg {
 	private String type;
 	private int id;

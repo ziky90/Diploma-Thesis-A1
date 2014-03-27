@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.zikesjan.dt.a1.model.route.Point;
 
+/**
+ * POJO representing the request to the API
+ * @author zikesjan
+ *
+ */
 public class Request {
 
 	private int maxInterchanges;

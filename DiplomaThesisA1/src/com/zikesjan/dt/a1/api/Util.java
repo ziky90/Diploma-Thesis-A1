@@ -9,10 +9,20 @@ import org.apache.http.entity.StringEntity;
 
 import com.zikesjan.dt.a1.model.request.Request;
 
+/**
+ * Class containing various static operations methods, that are not related to any specific class
+ * @author zikesjan
+ *
+ */
 public class Util {
 
+	/**
+	 * class that creates JSON from request and date
+	 * @param date
+	 * @param request
+	 * @return
+	 */
 	public static StringEntity buildJson(Date date, Request request) {
-		// TODO fix the date format to correspond with the desired one
 		StringEntity json = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 		String formattedTime = sdf.format(date);
@@ -42,6 +52,11 @@ public class Util {
 		return json;
 	}
 
+	/**
+	 * method that converts list of strings to the JSON array
+	 * @param list
+	 * @return
+	 */
 	private static String listAsJsonString(List<String> list) {
 		StringBuilder sb = new StringBuilder();
 		for (String s : list) {

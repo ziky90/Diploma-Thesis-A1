@@ -11,6 +11,11 @@ import com.zikesjan.dt.a1.model.request.Request;
 import com.zikesjan.dt.a1.model.route.Point;
 import com.zikesjan.dt.a1.model.route.Route;
 
+/**
+ * Class that implements threads for api calls
+ * @author zikesjan
+ *
+ */
 public class ApiCallingThread implements Runnable {
 
 	private Point center;
@@ -30,6 +35,12 @@ public class ApiCallingThread implements Runnable {
 		Main.threadsRunned++;
 	}
 
+	/**
+	 * method to generate passengers and call the planner's api
+	 * @param number
+	 * @param center
+	 * @param radius
+	 */
 	public static void generateWithRoutes(int number, Point center, float radius) {
 		List<Passenger> passengers = PassengerGenerator
 				.generateRandomPassengers(number, center, radius);
