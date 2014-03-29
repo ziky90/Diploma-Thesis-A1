@@ -2,6 +2,7 @@ package com.zikesjan.dt.a1.api;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import com.zikesjan.dt.a1.Main;
 import com.zikesjan.dt.a1.generator.PassengerGenerator;
@@ -13,30 +14,42 @@ import com.zikesjan.dt.a1.model.route.Route;
 
 /**
  * Class that implements threads for api calls
+ * 
  * @author zikesjan
- *
+ * 
  */
 public class ApiCallingThread implements Runnable {
 
 	private Point center;
 	private float radius;
 	private int number;
+	private final CountDownLatch startSignal;
+	private final CountDownLatch doneSignal;
 
-	public ApiCallingThread(Point center, float radius, int number) {
+	public ApiCallingThread(Point center, float radius, int number, CountDownLatch startSignal, CountDownLatch doneSignal) {
 		super();
 		this.center = center;
 		this.radius = radius;
 		this.number = number;
+		this.startSignal = startSignal;
+	    this.doneSignal = doneSignal;
 	}
 
 	@Override
 	public void run() {
-		ApiCallingThread.generateWithRoutes(number, center, radius);
-		Main.threadsRunned++;
+		try {
+			startSignal.await();
+			ApiCallingThread.generateWithRoutes(number, center, radius);
+			Main.threadsRunned++;
+			doneSignal.countDown();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * method to generate passengers and call the planner's api
+	 * 
 	 * @param number
 	 * @param center
 	 * @param radius
@@ -61,7 +74,7 @@ public class ApiCallingThread implements Runnable {
 				System.out.println(rt.getDescription());
 			}
 			counter++;
-			 
+
 		}
 	}
 

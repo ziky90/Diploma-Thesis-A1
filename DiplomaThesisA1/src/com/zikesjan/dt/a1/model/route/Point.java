@@ -20,12 +20,23 @@ public class Point {
 	public int getLat() {
 		return lat;
 	}
+	
+	public double getLatDouble(){
+		return (double)(lat)/1e6;
+	}
+	
 	public void setLat(int lat) {
 		this.lat = lat;
 	}
+	
 	public int getLon() {
 		return lon;
 	}
+	
+	public double getLonDouble(){
+		return (double)(lon)/1e6;
+	}
+	
 	public void setLon(int lon) {
 		this.lon = lon;
 	}
