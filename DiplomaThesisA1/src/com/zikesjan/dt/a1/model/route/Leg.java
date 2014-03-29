@@ -1,5 +1,9 @@
 package com.zikesjan.dt.a1.model.route;
 
+import java.util.List;
+
+import com.zikesjan.dt.a1.environment.IShareStation;
+
 /**
  * POJO class modeling one leg of the journey
  * @author zikesjan
@@ -12,11 +16,13 @@ public class Leg {
 	private int distance;
 	private int duration;
 	private int physicalEffort;
-	private int price;
+	private List<AtomicTravelAction> atomicTravelActions;
+	private IShareStation rentStation;
+	private IShareStation returnStation;
 	
 		
 	public Leg(String type, int id, int emissions, int distance, int duration,
-			int physicalEffort) {
+			int physicalEffort, List<AtomicTravelAction> atomicTravelActions) {
 		super();
 		this.type = type;
 		this.id = id;
@@ -24,20 +30,9 @@ public class Leg {
 		this.distance = distance;
 		this.duration = duration;
 		this.physicalEffort = physicalEffort;
-		//TODO perform custom price calculation
+		this.atomicTravelActions = atomicTravelActions;
 	}
 
-	public Leg(String type, int id, int emissions, int distance, int duration,
-			int physicalEffort, int price) {
-		super();
-		this.type = type;
-		this.id = id;
-		this.emissions = emissions;
-		this.distance = distance;
-		this.duration = duration;
-		this.physicalEffort = physicalEffort;
-		this.price = price;
-	}
 
 	public String getType() {
 		return type;
@@ -87,13 +82,34 @@ public class Leg {
 		this.physicalEffort = physicalEffort;
 	}
 
-	public int getPrice() {
-		return price;
+
+	public IShareStation getRentStation() {
+		return rentStation;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
+
+	public void setRentStation(IShareStation rentStation) {
+		this.rentStation = rentStation;
 	}
-	
+
+
+	public IShareStation getReturnStation() {
+		return returnStation;
+	}
+
+
+	public void setReturnStation(IShareStation returnStation) {
+		this.returnStation = returnStation;
+	}
+
+
+	public List<AtomicTravelAction> getAtomicTravelActions() {
+		return atomicTravelActions;
+	}
+
+
+	public void setAtomicTravelActions(List<AtomicTravelAction> atomicTravelActions) {
+		this.atomicTravelActions = atomicTravelActions;
+	}	
 	
 }

@@ -1,6 +1,7 @@
 package com.zikesjan.dt.a1.model.passenger;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
 import com.zikesjan.dt.a1.model.route.Point;
 import com.zikesjan.dt.a1.model.route.Route;
@@ -19,7 +20,7 @@ public class Passenger {
 	private int maxInterchnges;
 	private double optimalPrice;
 	private double maxPrice;
-	private List<Route> routes;
+	private PriorityQueue<Route> routes;
 	
 	public Passenger(Point origin, Point destination, int maxWalking,
 			List<String> allowedTransport, int maxInterchnges,
@@ -90,12 +91,11 @@ public class Passenger {
 		this.maxPrice = maxPrice;
 	}
 
-	public List<Route> getRoutes() {
+	public PriorityQueue<Route> getRoutes() {
 		return routes;
 	}
 
-	public void setRoutes(List<Route> routes) {
+	public void setRoutes(PriorityQueue<Route> routes) {
 		this.routes = routes;
-	}
-	
+	}	
 }

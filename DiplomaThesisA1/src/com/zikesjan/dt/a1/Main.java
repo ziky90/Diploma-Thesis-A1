@@ -3,8 +3,12 @@ package com.zikesjan.dt.a1;
 import java.util.concurrent.CountDownLatch;
 
 import com.zikesjan.dt.a1.api.ApiCallingThread;
-import com.zikesjan.dt.a1.bikeshare.BikeShareData;
+import com.zikesjan.dt.a1.environment.bikeshare.BikeShareData;
+import com.zikesjan.dt.a1.model.passenger.Passenger;
+import com.zikesjan.dt.a1.model.passenger.PassengersData;
+import com.zikesjan.dt.a1.model.passenger.ai.RouteSelector;
 import com.zikesjan.dt.a1.model.route.Point;
+import com.zikesjan.dt.a1.model.route.Route;
 import com.zikesjan.dt.a1.visualization.Visualizer;
 
 /**
@@ -38,9 +42,17 @@ public class Main {
 		
 		BikeShareData bsd = BikeShareData.getInstance();
 		System.out.println(bsd.getBikeShares().size());
+		Visualizer.visualizeBikeshares(bsd.getBikeShares());
 		
-		//TODO do some analysis
-		//TODO visualize
-		Visualizer.visualize(bsd.getBikeShares());
+		PassengersData pd = PassengersData.getInstance();
+		for(Passenger p : pd.getPassengers()){			//TODO extend this method to something smarter
+			Route r = RouteSelector.selectTheBestRoute(p);
+			if(r != null){								//we don't deal with guys that were so unlucky that planner has even not found a route for them
+				RouteSelector.performRoute(r);
+				Visualizer.visualizeRoute(r);
+				Visualizer.resetBikeshares(r);
+			}
+		}
+		Visualizer.saveToFile();
 	}	
 }

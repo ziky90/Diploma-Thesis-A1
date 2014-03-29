@@ -1,5 +1,6 @@
-package com.zikesjan.dt.a1.bikeshare;
+package com.zikesjan.dt.a1.environment.bikeshare;
 
+import com.zikesjan.dt.a1.environment.IShareStation;
 import com.zikesjan.dt.a1.model.route.Point;
 
 /**
@@ -7,17 +8,19 @@ import com.zikesjan.dt.a1.model.route.Point;
  * @author zikesjan
  *
  */
-public class BikeShare {
+public class BikeShare implements IShareStation{
 
 	private Point position;
 	private int price;
 	private int capacity;
+	private int availableItems;
 	
-	public BikeShare(Point position, int price, int capacity) {
+	public BikeShare(Point position, int price, int capacity, int availableBikes) {
 		super();
 		this.position = position;
 		this.price = price;
 		this.capacity = capacity;
+		this.availableItems = availableBikes;
 	}
 
 	public Point getPosition() {
@@ -36,14 +39,20 @@ public class BikeShare {
 		this.price = price;
 	}
 	
-	
-
 	public int getCapacity() {
 		return capacity;
 	}
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+	
+	public int getAvailableItems() {
+		return availableItems;
+	}
+
+	public void setAvailableBikes(int availableBikes) {
+		this.availableItems = availableBikes;
 	}
 
 	@Override
@@ -70,5 +79,31 @@ public class BikeShare {
 		} else if (!position.equals(other.position))
 			return false;
 		return true;
-	}	
+	}
+	
+	/**
+	 * method that is performing the rent a bike operation
+	 * @return
+	 */
+	public boolean rentItem(){
+		if(this.availableItems == 0) return false;
+		else{
+			this.availableItems--;
+			//TODO do some pricing logic, etc.
+		}
+		return true;
+	}
+	
+	/**
+	 * method that is performing the return a bike operation
+	 * @return
+	 */
+	public boolean returnItem(){
+		if(this.capacity - this.availableItems == 0) return false;
+		else{
+			this.availableItems++;
+			//TODO do some pricing logic, etc.
+		}
+		return true;
+	}
 }

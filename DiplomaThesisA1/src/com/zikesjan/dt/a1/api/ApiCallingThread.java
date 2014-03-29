@@ -2,6 +2,7 @@ package com.zikesjan.dt.a1.api;
 
 import java.util.Date;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.concurrent.CountDownLatch;
 
 import com.zikesjan.dt.a1.Main;
@@ -63,18 +64,14 @@ public class ApiCallingThread implements Runnable {
 		for (Passenger p : passengers) {
 			Request r = new Request(p.getMaxInterchnges(), p.getMaxWalking(),
 					p.getAllowedTransport(), p.getOrigin(), p.getDestination());
-			List<Route> result = Connector.getInfo(new Date(), r);
+			PriorityQueue<Route> result = Connector.getInfo(new Date(), r);
 			p.setRoutes(result);
 			System.out.println("passenger " + counter + "from: "
 					+ p.getOrigin().toString() + "to: "
 					+ p.getDestination().toString() + ", routes found: "
 					+ result.size());
 			pd.addPassenger(p);
-			for (Route rt : result) {
-				System.out.println(rt.getDescription());
-			}
 			counter++;
-
 		}
 	}
 

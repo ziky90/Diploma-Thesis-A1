@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,9 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.zikesjan.dt.a1.bikeshare.BikeShare;
-import com.zikesjan.dt.a1.bikeshare.BikeShareData;
+import com.zikesjan.dt.a1.environment.bikeshare.BikeShareUtil;
 import com.zikesjan.dt.a1.model.request.Request;
+import com.zikesjan.dt.a1.model.route.AtomicTravelAction;
 import com.zikesjan.dt.a1.model.route.Leg;
 import com.zikesjan.dt.a1.model.route.Point;
 import com.zikesjan.dt.a1.model.route.Route;
@@ -43,7 +44,7 @@ public class Connector {
 	 * 
 	 * @return
 	 */
-	public static List<Route> getInfo(Date date, Request data) {
+	public static PriorityQueue<Route> getInfo(Date date, Request data) {
 		
 		HttpClient httpclient = HttpClientBuilder.create().build();
 		
@@ -73,13 +74,13 @@ public class Connector {
 				instream.close();
 				
 				JSONArray plans = json.getJSONArray("journeyPlans");
-				List<Route> l = new LinkedList<Route>();
+				PriorityQueue<Route> routes = new PriorityQueue<>();
 				for(int i = 0; i<plans.length(); i++){
 					JSONObject obj = plans.getJSONObject(i);
 					JSONObject prop = obj.getJSONObject("properties");
-					l.add(new Route(obj.getString("description"), prop.getInt("emissions"), prop.getInt("physicalEffort"), null, null, prop.getInt("duration"), prop.getInt("distance"), buildLeg(obj.getJSONArray("journeyLegs")))); //FIXME implement also legs
+					routes.add(new Route(obj.getString("description"), prop.getInt("emissions"), prop.getInt("physicalEffort"), null, null, prop.getInt("duration"), prop.getInt("distance"), buildLeg(obj.getJSONArray("journeyLegs")))); //FIXME implement also legs
 				}
-				return l;
+				return routes;
 			} else if (statusLine.getStatusCode() == HttpStatus.SC_BAD_REQUEST) {
 				return null;
 			}
@@ -105,16 +106,25 @@ public class Connector {
 		for(int i = 0; i<json.length(); i++){
 			JSONObject obj = json.getJSONObject(i);
 			JSONObject prop = obj.getJSONObject("properties");
-			result.add(new Leg(obj.getString("modeOfTransport"), obj.getInt("journeyLegID"), prop.getInt("emissions"), prop.getInt("distance"), prop.getInt("duration"), prop.getInt("physicalEffort")));
+			JSONArray atomic = obj.getJSONArray("atomicTravelActions");
+			List<AtomicTravelAction> atomicActions = new LinkedList<>();
+			for(int j = 0; j < atomic.length(); j++){
+				JSONObject current = atomic.getJSONObject(j); 
+				JSONObject from = obj.getJSONObject("nodes").getJSONObject(current.getLong("originID")+"");
+				JSONObject to = obj.getJSONObject("nodes").getJSONObject(current.getLong("destinationID")+"");
+				atomicActions.add(new AtomicTravelAction(new Point(from.getInt("latE6"), from.getInt("lonE6")), new Point(to.getInt("latE6"), to.getInt("lonE6")), current.getInt("duration"), current.getInt("distance")));
+			}
+			Leg leg = new Leg(obj.getString("modeOfTransport"), obj.getInt("journeyLegID"), prop.getInt("emissions"), prop.getInt("distance"), prop.getInt("duration"), prop.getInt("physicalEffort"), atomicActions);
 			if(obj.getString("modeOfTransport").equals("SHARED_BIKE")){
-				BikeShareData bsd = BikeShareData.getInstance();
 				JSONObject origin = obj.getJSONObject("nodes").getJSONObject(obj.getLong("originID")+"");
 				JSONObject destination = obj.getJSONObject("nodes").getJSONObject(obj.getLong("originID") + "");
-				bsd.addBikeShare(new BikeShare(new Point(origin.getInt("latE6"), origin.getInt("lonE6")), 10, 100)); //TODO deal with the pricing mechanism
-				bsd.addBikeShare(new BikeShare(new Point(destination.getInt("latE6"), destination.getInt("lonE6")), 10, 100));
+				leg.setRentStation(BikeShareUtil.saveBikeStation(new Point(origin.getInt("latE6"), origin.getInt("lonE6"))));
+				leg.setReturnStation(BikeShareUtil.saveBikeStation(new Point(destination.getInt("latE6"), destination.getInt("lonE6"))));
 			}
-			System.out.println(obj.getString("modeOfTransport"));
+			result.add(leg);
+			//System.out.println(obj.getString("modeOfTransport"));
 		}
+		//System.out.println(result.size());
 		return result;
 	}
 

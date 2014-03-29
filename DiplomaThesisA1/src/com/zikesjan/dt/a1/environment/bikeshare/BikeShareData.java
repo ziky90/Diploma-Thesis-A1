@@ -1,4 +1,4 @@
-package com.zikesjan.dt.a1.bikeshare;
+package com.zikesjan.dt.a1.environment.bikeshare;
 
 import java.util.HashSet;
 

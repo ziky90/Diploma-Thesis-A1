@@ -3,12 +3,14 @@ package com.zikesjan.dt.a1.model.route;
 import java.util.Date;
 import java.util.List;
 
+import com.zikesjan.dt.a1.model.passenger.ai.RouteSelector;
+
 /**
  * POJO class representing the route
  * @author zikesjan
  *
  */
-public class Route {
+public class Route implements Comparable<Route>{
 
 	private String description;
 	private int emissions;
@@ -18,6 +20,7 @@ public class Route {
 	private int duration;
 	private int distance;
 	private List<Leg> legs;
+	private int price;
 	
 	public Route(String description, int emissions, int physicalEffort,
 			Date departure, Date arrival, int duration, int distance,
@@ -31,6 +34,7 @@ public class Route {
 		this.duration = duration;
 		this.distance = distance;
 		this.legs = legs;
+		this.price = RouteSelector.computeRoutePrices(legs, description);
 	}
 
 	public String getDescription() {
@@ -95,6 +99,20 @@ public class Route {
 
 	public void setLegs(List<Leg> legs) {
 		this.legs = legs;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
+	public int compareTo(Route o) {
+		if(this.price > o.price) return 1;
+		else return -1;
 	}
 	
 	
