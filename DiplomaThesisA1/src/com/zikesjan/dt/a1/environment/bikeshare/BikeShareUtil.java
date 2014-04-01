@@ -9,8 +9,8 @@ import com.zikesjan.dt.a1.model.route.Point;
  */
 public class BikeShareUtil {
 
-	private static final int capacity = 100;
-	private static final int initialBikes = 50;
+	private static final int capacity = 20;
+	private static final int initialBikes = 10;
 	private static final int initialPrice = 10;
 	
 	/**
@@ -19,8 +19,7 @@ public class BikeShareUtil {
 	 */
 	public static BikeShare saveBikeStation(Point p){
 		BikeShareData bsd = BikeShareData.getInstance();
-		BikeShare bs = new BikeShare(p, initialPrice, capacity, initialBikes);
-		bsd.addBikeShare(bs);
+		BikeShare bs = bsd.addBikeShare(p, initialPrice, capacity, initialBikes);		
 		return bs;
 	}
 	

@@ -3,6 +3,7 @@ package com.zikesjan.dt.a1.model.passenger.ai;
 import java.util.List;
 
 import com.zikesjan.dt.a1.environment.IShareStation;
+import com.zikesjan.dt.a1.environment.bikeshare.BikeShareData;
 import com.zikesjan.dt.a1.model.passenger.Passenger;
 import com.zikesjan.dt.a1.model.route.Leg;
 import com.zikesjan.dt.a1.model.route.Route;
@@ -83,6 +84,7 @@ public class RouteSelector {
 			if(l.getRentStation() != null){
 				l.getRentStation().rentItem();
 				l.getReturnStation().returnItem();
+				BikeShareData.hasChanged = true;
 			}
 		}
 		Visualizer.visualizeRoute(route);

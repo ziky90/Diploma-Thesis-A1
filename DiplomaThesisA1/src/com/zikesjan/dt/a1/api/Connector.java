@@ -117,7 +117,7 @@ public class Connector {
 			Leg leg = new Leg(obj.getString("modeOfTransport"), obj.getInt("journeyLegID"), prop.getInt("emissions"), prop.getInt("distance"), prop.getInt("duration"), prop.getInt("physicalEffort"), atomicActions);
 			if(obj.getString("modeOfTransport").equals("SHARED_BIKE")){
 				JSONObject origin = obj.getJSONObject("nodes").getJSONObject(obj.getLong("originID")+"");
-				JSONObject destination = obj.getJSONObject("nodes").getJSONObject(obj.getLong("originID") + "");
+				JSONObject destination = obj.getJSONObject("nodes").getJSONObject(obj.getLong("destinationID") + "");
 				leg.setRentStation(BikeShareUtil.saveBikeStation(new Point(origin.getInt("latE6"), origin.getInt("lonE6"))));
 				leg.setReturnStation(BikeShareUtil.saveBikeStation(new Point(destination.getInt("latE6"), destination.getInt("lonE6"))));
 			}

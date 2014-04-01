@@ -45,12 +45,15 @@ public class Main {
 		Visualizer.visualizeBikeshares(bsd.getBikeShares());
 		
 		PassengersData pd = PassengersData.getInstance();
-		for(Passenger p : pd.getPassengers()){			//TODO extend this method to something smarter
+		for(Passenger p : pd.getPassengers()){				//TODO extend this method to something smarter
 			Route r = RouteSelector.selectTheBestRoute(p);
-			if(r != null){								//we don't deal with guys that were so unlucky that planner has even not found a route for them
+			if(r != null){									//we don't deal with guys that were so unlucky that planner has even not found a route for them
 				RouteSelector.performRoute(r);
 				Visualizer.visualizeRoute(r);
-				Visualizer.resetBikeshares(r);
+				if(BikeShareData.hasChanged){
+					Visualizer.resetBikeshares(bsd.getBikeShares());
+					BikeShareData.hasChanged = false;
+				}
 			}
 		}
 		Visualizer.saveToFile();

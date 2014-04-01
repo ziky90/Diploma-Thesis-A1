@@ -15,12 +15,12 @@ public class BikeShare implements IShareStation{
 	private int capacity;
 	private int availableItems;
 	
-	public BikeShare(Point position, int price, int capacity, int availableBikes) {
+	public BikeShare(Point position, int price, int capacity, int availableItems) {
 		super();
 		this.position = position;
 		this.price = price;
 		this.capacity = capacity;
-		this.availableItems = availableBikes;
+		this.availableItems = availableItems;
 	}
 
 	public Point getPosition() {
@@ -51,8 +51,8 @@ public class BikeShare implements IShareStation{
 		return availableItems;
 	}
 
-	public void setAvailableBikes(int availableBikes) {
-		this.availableItems = availableBikes;
+	public void setAvailableTtems(int availableItems) {
+		this.availableItems = availableItems;
 	}
 
 	@Override
@@ -86,9 +86,11 @@ public class BikeShare implements IShareStation{
 	 * @return
 	 */
 	public boolean rentItem(){
+		
 		if(this.availableItems == 0) return false;
 		else{
 			this.availableItems--;
+			System.out.println("rented @ " +this.position + ": " + this.availableItems);
 			//TODO do some pricing logic, etc.
 		}
 		return true;
@@ -99,9 +101,11 @@ public class BikeShare implements IShareStation{
 	 * @return
 	 */
 	public boolean returnItem(){
+		
 		if(this.capacity - this.availableItems == 0) return false;
 		else{
 			this.availableItems++;
+			System.out.println("returned @ " + this.position + ": " + this.availableItems);
 			//TODO do some pricing logic, etc.
 		}
 		return true;

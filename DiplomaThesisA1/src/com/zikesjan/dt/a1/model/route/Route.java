@@ -111,6 +111,12 @@ public class Route implements Comparable<Route>{
 
 	@Override
 	public int compareTo(Route o) {
+		for(Leg l : this.legs){
+			if(l.getRentStation()!=null) return -1;		//condition to prefer bike renters
+		}
+		for(Leg l : o.legs){
+			if(l.getRentStation()!=null) return 1;		//CONDITION TO PREFER BIKE RENTERS
+		}
 		if(this.price > o.price) return 1;
 		else return -1;
 	}
