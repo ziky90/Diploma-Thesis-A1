@@ -17,6 +17,7 @@ import de.micromata.opengis.kml.v_2_2_0.Coordinate;
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Folder;
 import de.micromata.opengis.kml.v_2_2_0.Kml;
+import de.micromata.opengis.kml.v_2_2_0.LineString;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.TimeStamp;
 
@@ -50,21 +51,23 @@ public class Visualizer {
 	}
 
 	public static void visualizeRoute(Route route) {
-		List<Coordinate> wayPoints = new LinkedList<>();
 		for (Leg l : route.getLegs()) {
+			List<Coordinate> wayPoints = new LinkedList<>();
 			for (AtomicTravelAction ata : l.getAtomicTravelActions()) {
 				wayPoints.add(new Coordinate(ata.getOrigin().getLonDouble(),
 						ata.getOrigin().getLatDouble()));
 				wayPoints.add(new Coordinate(ata.getDestination()
 						.getLonDouble(), ata.getOrigin().getLatDouble()));
 			}
+			Placemark p = document.createAndAddPlacemark();
+			LineString ls = p.createAndSetLineString();
+			ls.withExtrude(Boolean.TRUE);
+			ls.createAndSetCoordinates().addAll(wayPoints);
+			TimeStamp ts = new TimeStamp();
+			ts.setWhen(dateToString(currentDate));
+			p.setTimePrimitive(ts);
+			if(l.getRentStation()!=null) p.createAndAddStyle().createAndSetLineStyle().withColor("ff0000ff").withWidth(5);
 		}
-		Placemark p = document.createAndAddPlacemark();
-		p.createAndSetLineString().withExtrude(Boolean.TRUE)
-				.createAndSetCoordinates().addAll(wayPoints);
-		TimeStamp ts = new TimeStamp();
-		ts.setWhen(dateToString(currentDate));
-		p.setTimePrimitive(ts);
 	}
 
 	public static void resetBikeshares(Collection<BikeShare> bikeShares) {

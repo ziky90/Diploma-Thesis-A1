@@ -20,7 +20,7 @@ public class BikeShareData {
  
 	public static BikeShareData getInstance() {
 		if (instance == null) {
-                        synchronized (BikeShareData .class){
+                        synchronized (BikeShareData.class){
 			        if (instance == null) {
                                         instance = new BikeShareData ();
                                 }

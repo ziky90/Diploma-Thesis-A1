@@ -3,7 +3,7 @@ package com.zikesjan.dt.a1.model.route;
 import java.util.Date;
 import java.util.List;
 
-import com.zikesjan.dt.a1.model.passenger.ai.RouteSelector;
+import com.zikesjan.dt.a1.model.passenger.ai.RoutePriceEvaluator;
 
 /**
  * POJO class representing the route
@@ -34,7 +34,7 @@ public class Route implements Comparable<Route>{
 		this.duration = duration;
 		this.distance = distance;
 		this.legs = legs;
-		this.price = RouteSelector.computeRoutePrices(legs, description);
+		this.price = RoutePriceEvaluator.computeRoutePrices(legs, description);
 	}
 
 	public String getDescription() {
@@ -111,12 +111,6 @@ public class Route implements Comparable<Route>{
 
 	@Override
 	public int compareTo(Route o) {
-		for(Leg l : this.legs){
-			if(l.getRentStation()!=null) return -1;		//condition to prefer bike renters
-		}
-		for(Leg l : o.legs){
-			if(l.getRentStation()!=null) return 1;		//CONDITION TO PREFER BIKE RENTERS
-		}
 		if(this.price > o.price) return 1;
 		else return -1;
 	}
